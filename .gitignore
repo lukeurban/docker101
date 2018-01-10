@@ -1,0 +1,3 @@
+app1/data/db/mysql*
+app2/data/db/mysql*
+*.log
