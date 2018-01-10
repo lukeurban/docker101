@@ -1,2 +1,0 @@
-# docker
-Docker 101

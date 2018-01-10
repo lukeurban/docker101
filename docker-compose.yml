@@ -1,35 +1,25 @@
 version: '2'
 services:
-    nginx:
+    global_gateway:
+        container_name: global_gateway
         image: nginx:latest
         ports:
-            - "8080:80"
-        restart: always
+            - "8888:80"
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/nginx/log:/var/log/nginx"
-            - "./src:/application"
-        links:
-            - "backend"
+        networks:
+            - default
+            - app1_default
+            - app2_default
+        external_links:
+            - "app1_nginx"
+            - "app2_nginx"
 
-    backend:
-        build:
-            context: ./containers/php7
-        restart: always
-        volumes:
-            - "./src:/application"
-        links:
-            - "database"
-
-    database:
-        image: mysql
-        restart: always
-        environment:
-            - MYSQL_DATABASE=default
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=default
-            - MYSQL_PASSWORD=default
-        ports:
-            - 3307:3306
-        volumes:
-            - ./data/db/mysql_default:/var/lib/mysql
+networks:
+  default:
+      driver: bridge
+  app1_default:
+      external: true
+  app2_default:
+      external: true
