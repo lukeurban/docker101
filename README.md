@@ -8,6 +8,6 @@ This repository has four branches. Each containes different docker configuration
 
 
 # v3
-To scale backend container, run command:
+To run configuration with scaled backend container:
 
     docker-compose up -d --scale backend=3 --build
